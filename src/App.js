@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import "./App.css"
 
+import Calculator from "./components/Calculator"
 import ScatterChart from "./components/ScatterChart"
 
 class App extends Component {
@@ -8,24 +9,22 @@ class App extends Component {
     super(props)
   
     this.state = {
-       
+      scaleNames: {
+        c: 'Celsius',
+        f: 'Fahrenheit'
+      }
     }
   }
   
-  const scaleNames = {
-    c: 'Celsius',
-    f: 'Fahrenheit'
-  };
-  
-  function toCelsius(fahrenheit) {
+  toCelsius = fahrenheit => {
     return (fahrenheit - 32) * 5 / 9;
   }
   
-  function toFahrenheit(celsius) {
+  toFahrenheit = celsius => {
     return (celsius * 9 / 5) + 32;
   }
   
-  function tryConvert(temperature, convert) {
+  tryConvert = (temperature, convert) => {
     const input = parseFloat(temperature);
     if (Number.isNaN(input)) {
       return '';
@@ -35,16 +34,22 @@ class App extends Component {
     return rounded.toString();
   }
   
-  function BoilingVerdict(props) {
+  /* 
+  BoilingVerdict = props => {
     if (props.celsius >= 100) {
       return <p>The water would boil.</p>;
     }
     return <p>The water would not boil.</p>;
-  }
-
+  } */
+ 
   render() {
     return (
       <div className="App">
+        <Calculator 
+          toCelsius={this.toCelsius}
+          toFahrenheit={this.toFahrenheit}
+          tryConvert={this.tryConvert}
+        />
         <ScatterChart />
       </div>
     )
