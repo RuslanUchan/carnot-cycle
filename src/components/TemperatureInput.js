@@ -7,7 +7,8 @@ class TemperatureInput extends Component {
     this.state = {
       scaleNames: {
         c: 'Celsius',
-        f: 'Fahrenheit'
+        f: 'Fahrenheit',
+        k: 'Kelvin'
       }
     }
   }
