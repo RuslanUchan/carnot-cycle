@@ -14,10 +14,12 @@ class TemperatureInput extends Component {
   render() {
     const temperature = this.props.temperature
     const label = this.props.label
+    const disabled = label === "High (TH)" || label === "Low (TC)" ? false : true
+
     return (
       <fieldset>
         <legend>{label}:</legend>
-        <input value={temperature} onChange={this.handleChange} />
+        <input value={temperature} onChange={this.handleChange} disabled={disabled} />
       </fieldset>
     )
   }
