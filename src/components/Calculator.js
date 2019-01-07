@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import TemperatureInput from "./TemperatureInput"
-import { Container, Row, Col } from "reactstrap"
+import { Card, CardTitle, CardBody, CardText } from "reactstrap"
 
 class Calculator extends Component {
   constructor(props) {
@@ -41,14 +41,22 @@ class Calculator extends Component {
     const fahrenheit = this.tryConvert(temperature, this.toFahrenheit)
 
     return (
-      <div>
-        <TemperatureInput
-          temperature={this.state.temperature}
-          onTemperatureChange={this.handleKelvinChange}
-        />
-        <TemperatureInput temperature={celsius} />
-        <TemperatureInput temperature={fahrenheit} />
-      </div>
+      <Card>
+        <CardBody>
+          <CardTitle>
+            <h3>Enter temperature in</h3>
+          </CardTitle>
+          <CardText>
+            <TemperatureInput
+              scale="k"
+              temperature={this.state.temperature}
+              onTemperatureChange={this.handleKelvinChange}
+            />
+            <TemperatureInput scale="c" temperature={celsius} />
+            <TemperatureInput scale="f" temperature={fahrenheit} />
+          </CardText>
+        </CardBody>
+      </Card>
     )
   }
 }

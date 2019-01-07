@@ -22,8 +22,17 @@ class TemperatureInput extends Component {
     const scale = this.props.scale
     return (
       <fieldset>
-        <legend>Enter temperature in {this.state.scaleNames[scale]}:</legend>
-        <input value={temperature} onChange={this.handleChange} />
+        <legend>{this.state.scaleNames[scale]}:</legend>
+        {this.props.scale !== "k" ? (
+          <input
+            style={{ color: "black", borderRadius: 5 }}
+            disabled
+            value={temperature}
+            onChange={this.handleChange}
+          />
+        ) : (
+          <input value={temperature} onChange={this.handleChange} />
+        )}
       </fieldset>
     )
   }
