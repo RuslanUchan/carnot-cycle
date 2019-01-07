@@ -1,34 +1,28 @@
 import React, { Component } from "react"
 import TemperatureInput from "./TemperatureInput"
+import { Container, Row, Col } from "reactstrap"
 
 class Calculator extends Component {
   constructor(props) {
     super(props)
-    this.state = { temperature: "", scale: "c" }
-  }
-
-  handleCelsiusChange = temperature => {
-    this.setState({ scale: "c", temperature })
-  }
-
-  handleFahrenheitChange = temperature => {
-    this.setState({ scale: "f", temperature })
+    this.state = { temperature: "" }
   }
 
   handleKelvinChange = temperature => {
-    this.setState({ scale: "k", temperature })
+    this.setState({ temperature })
   }
 
-  toCelsius = fahrenheit => {
-    return ((fahrenheit - 32) * 5) / 9
+  /**
+   *  All temperature is converted into Kelvin. As kelvin is
+   *  used to calculate thermodynamics equation.
+   *  it's the international standard
+   */
+  toCelsius = kelvin => {
+    return kelvin - 273
   }
 
-  toFahrenheit = celsius => {
-    return (celsius * 9) / 5 + 32
-  }
-
-  toKelvin = celsius => {
-    return celsius + 273.0
+  toFahrenheit = kelvin => {
+    return (kelvin - 273) * 1.8 + 32
   }
 
   tryConvert = (temperature, convert) => {
@@ -42,34 +36,18 @@ class Calculator extends Component {
   }
 
   render() {
-    const scale = this.state.scale
     const temperature = this.state.temperature
-    const celsius =
-      scale === "f" ? this.tryConvert(temperature, this.toCelsius) : temperature
-    const fahrenheit =
-      scale === "c"
-        ? this.tryConvert(temperature, this.toFahrenheit)
-        : temperature
-    const kelvin =
-      scale === "c" ? this.tryConvert(temperature, this.toKelvin) : temperature
+    const celsius = this.tryConvert(temperature, this.toCelsius)
+    const fahrenheit = this.tryConvert(temperature, this.toFahrenheit)
 
     return (
       <div>
         <TemperatureInput
-          scale="c"
-          temperature={celsius}
-          onTemperatureChange={this.handleCelsiusChange}
-        />
-        <TemperatureInput
-          scale="f"
-          temperature={fahrenheit}
-          onTemperatureChange={this.handleFahrenheitChange}
-        />
-        <TemperatureInput
-          scale="k"
-          temperature={kelvin}
+          temperature={this.state.temperature}
           onTemperatureChange={this.handleKelvinChange}
         />
+        <TemperatureInput temperature={celsius} />
+        <TemperatureInput temperature={fahrenheit} />
       </div>
     )
   }
