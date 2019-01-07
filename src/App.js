@@ -1,10 +1,9 @@
 import React, { Component } from "react"
 import "./App.css"
-import { Container, Row, Col, Button } from "reactstrap"
+import { Container, Button } from "reactstrap"
 
-import Calculator from "./components/Calculator"
+import Calculator from "./components/TemperatureCalculator"
 import ScatterChart from "./components/ScatterChart"
-import Reactstrap from "./components/Reactstrap"
 
 class App extends Component {
   constructor(props) {
@@ -17,13 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1 style={{ marginBottom: "20px" }}>Carnot Cycle</h1>
-        <Row>
-          <Col>
-            <Calculator />
-          </Col>
-          <Col>...</Col>
-          <Col>...</Col>
-        </Row>
+        <Calculator />
         <Container style={{ marginTop: "10px" }}>
           <ScatterChart />
         </Container>

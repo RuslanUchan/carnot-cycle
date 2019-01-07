@@ -4,35 +4,20 @@ class TemperatureInput extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      scaleNames: {
-        c: "Celsius",
-        f: "Fahrenheit",
-        k: "Kelvin"
-      }
-    }
+    this.state = {}
   }
 
   handleChange = e => {
-    this.props.onTemperatureChange(e.target.value)
+    this.props.onTemperatureChange(e.target.value, this.props.label)
   }
 
   render() {
     const temperature = this.props.temperature
-    const scale = this.props.scale
+    const label = this.props.label
     return (
       <fieldset>
-        <legend>{this.state.scaleNames[scale]}:</legend>
-        {this.props.scale !== "k" ? (
-          <input
-            style={{ color: "black", borderRadius: 5 }}
-            disabled
-            value={temperature}
-            onChange={this.handleChange}
-          />
-        ) : (
-          <input value={temperature} onChange={this.handleChange} />
-        )}
+        <legend>{label}:</legend>
+        <input value={temperature} onChange={this.handleChange} />
       </fieldset>
     )
   }
