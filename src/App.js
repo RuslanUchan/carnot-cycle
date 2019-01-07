@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import "./App.css"
-import { Container, Button } from "reactstrap"
+import { Container } from "reactstrap"
 
 import Calculator from "./components/TemperatureCalculator"
 import ScatterChart from "./components/ScatterChart"
@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       initialVolume: [2, 8, 9, 3],
       initialPressure: [8, 6, 2, 4],
-      modifier: [[1.2, -0.4], [0.2, -0.8], [-1.2, 0.4], [-0.2, 0.8]]
+      modifier: [[1.2, -0.4], [0.2, -0.8], [-1.2, 0.4], [-0.2, 0.8]],
+      isVisualized: false
     }
   }
 
@@ -29,6 +30,11 @@ class App extends Component {
     return seriesData
   }
 
+  handleVisualize = () => {
+    this.setState({ isVisualized: !this.state.isVisualized })
+  }
+  
+
   render() {
     return (
       <div className="App">
@@ -36,13 +42,12 @@ class App extends Component {
         <Calculator />
         <Container style={{ marginTop: "10px" }}>
           <ScatterChart
+            isVisualized={this.state.isVisualized}
             PVDiagramModifier={this.PVDiagramModifier}
             systemVariables={this.state}
+            handleVisualize={this.handleVisualize}
           />
         </Container>
-        <Button color="primary" onClick={this.handleVisualize} size="lg">
-          Visualize
-        </Button>
       </div>
     )
   }

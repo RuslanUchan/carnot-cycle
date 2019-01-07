@@ -1,5 +1,25 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import ReactApexChart from "react-apexcharts"
+import { Button } from "reactstrap"
+
+const initialSeries = [
+  {
+    name: "Isothermal Expansion",
+    data: []
+  },
+  {
+    name: "Isentrophic Expansion",
+    data: []
+  },
+  {
+    name: "Isothermal Compression",
+    data: []
+  },
+  {
+    name: "Isentrophic Compression",
+    data: []
+  }
+]
 
 class ScatterChart extends Component {
   constructor(props) {
@@ -20,24 +40,7 @@ class ScatterChart extends Component {
           tickAmount: 10
         }
       },
-      series: [
-        {
-          name: "Isothermal Expansion",
-          data: []
-        },
-        {
-          name: "Isentrophic Expansion",
-          data: []
-        },
-        {
-          name: "Isothermal Compression",
-          data: []
-        },
-        {
-          name: "Isentrophic Compression",
-          data: []
-        }
-      ]
+      series: [...initialSeries]
     }
   }
 
@@ -50,10 +53,13 @@ class ScatterChart extends Component {
     } = this.props.systemVariables
     const PVDiagramModifier = this.props.PVDiagramModifier
 
+    // Copy the series
+    let series = [...this.state.series]
+
     // Initialize new array to merge state
     const seriesData = []
 
-    this.state.series.forEach((obj, index) => {
+    series.forEach((obj, index) => {
       let data = PVDiagramModifier(
         initialVolume[index],
         initialPressure[index],
@@ -68,16 +74,26 @@ class ScatterChart extends Component {
   }
 
   render() {
+    let series = [...initialSeries]
+
+    if (this.props.isVisualized) {
+      series = [...this.state.series]
+    }
+
     return (
-      <div id="chart">
-        {console.log(this.state.series)}
-        <ReactApexChart
-          options={this.state.options}
-          series={this.state.series}
-          type="scatter"
-          height="350"
-        />
-      </div>
+      <Fragment>
+        <div id="chart">
+          <ReactApexChart
+            options={this.state.options}
+            series={series}
+            type="scatter"
+            height="350"
+          />
+        </div>
+        <Button color="primary" onClick={this.props.handleVisualize} size="lg">
+          Visualize
+        </Button>
+      </Fragment>
     )
   }
 }
